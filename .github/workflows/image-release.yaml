@@ -1,4 +1,4 @@
-name: Build and test with docker image
+name: Release with docker image
 
 on:
         #########pull_request:
@@ -14,8 +14,8 @@ jobs:
       clang-build: false
       gcc-build: true
       ninja_build: true
-      test: true
-      install: fasle
+      test: false
+      install: true
     secrets: inherit 
     #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
