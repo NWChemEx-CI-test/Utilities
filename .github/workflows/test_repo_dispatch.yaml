@@ -1,0 +1,15 @@
+name: Test of send a repo dispatch
+on:
+  workflow_dispatch:
+
+jobs:
+  repo_dispatch_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send a repo dispatch to announce the update of the release image
+        uses: NWChemEx-CI-test/.github/.github/workflows/release_dispatch_tmpl.yaml
+        with:
+          repo_name: Utilities
+        secrets: inherit
+            #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+            #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
