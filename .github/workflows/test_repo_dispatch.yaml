@@ -12,7 +12,7 @@ jobs:
         uses: NWChemEx-CI-test/.github/actions/release_dispatch@master
         with:
           repo_name: Utilities
-          DOCKER_PAT: {{ secrets.DOCKER_PAT }}
+          DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
           #secrets: inherit
             #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
             #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
