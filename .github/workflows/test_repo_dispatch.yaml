@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send a repo dispatch to announce the update of the release image
-        uses: NWChemEx-CI-test/.github/.github/workflows/release_dispatch_tmpl.yaml
+        uses: NWChemEx-CI-test/.github/.github/workflows/release_dispatch_tmpl.yaml@master
         with:
           repo_name: Utilities
         secrets: inherit
