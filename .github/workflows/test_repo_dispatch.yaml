@@ -9,9 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send a repo dispatch to announce the update of the release image
-        uses: NWChemEx-CI-test/.github/.github/workflows/release_dispatch_tmpl.yaml@master
+        uses: NWChemEx-CI-test/.github/actions/release_dispatch
         with:
           repo_name: Utilities
-        secrets: inherit
+          DOCKER_PAT: {{ secrets.DOCKER_PAT }}
+          #secrets: inherit
             #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
             #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
