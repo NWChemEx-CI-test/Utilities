@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send a repo dispatch to announce the update of the release image
-        uses: NWChemEx-CI-test/.github/actions/release_dispatch
+        uses: NWChemEx-CI-test/.github/actions/release_dispatch@master
         with:
           repo_name: Utilities
           DOCKER_PAT: {{ secrets.DOCKER_PAT }}
