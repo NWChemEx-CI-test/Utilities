@@ -8,10 +8,11 @@ jobs:
   repo_dispatch_test:
     runs-on: ubuntu-latest
     steps:
-      - name: Send a repo dispatch to announce the update of the release image
+      - name: Send release dispatches to target repos
         uses: NWChemEx-CI-test/.github/actions/release_dispatch@master
         with:
-          repo_name: PluginPlay
+          from_repo: Utilities
+          to_repo: [PluginPlay, ParallelZone]
           DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
           #secrets: inherit
             #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
