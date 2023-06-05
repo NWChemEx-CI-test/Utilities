@@ -14,7 +14,7 @@ jobs:
       - name: Send release dispatches to target repos
         uses: NWChemEx-CI-test/.github/actions/release_dispatch@master
         with:
-          to_repo: ${{ target_repo }}
+          to_repo: ${{ matrix.target_repo }}
           DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
           #secrets: inherit
             #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
