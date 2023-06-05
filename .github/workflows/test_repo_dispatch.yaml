@@ -7,12 +7,14 @@ on:
 jobs:
   repo_dispatch_test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target_repo: [PluginPlay, ParallelZone]
     steps:
       - name: Send release dispatches to target repos
         uses: NWChemEx-CI-test/.github/actions/release_dispatch@master
         with:
-          from_repo: Utilities
-          to_repo: [PluginPlay, ParallelZone]
+          to_repo: ${{ target_repo }}
           DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
           #secrets: inherit
             #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
