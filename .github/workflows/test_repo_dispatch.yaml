@@ -12,10 +12,11 @@ jobs:
         target_repo: [PluginPlay, ParallelZone]
     steps:
       - name: Send release dispatches to target repos
-        uses: NWChemEx-CI-test/.github/actions/release_dispatch@master
+        uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
         with:
           to_repo: ${{ matrix.target_repo }}
           DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
+          type: build_update
           #secrets: inherit
             #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
             #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
