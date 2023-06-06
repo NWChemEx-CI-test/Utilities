@@ -1,0 +1,20 @@
+name: Rebuild building image
+on:
+  repository_dispatch:
+    types: build_update
+
+jobs:
+  rebuild_building:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update the building tool image
+        run: |
+          docker tag ghcr.io/yzhang-23/build_parallelzone:v1 ghcr.io/yzhang-23/build_utilities:v1
+          docker push ghcr.io/yzhang-23/build_utilities:v1
+      - name: Send a release update repo dispatch
+        uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
+        with:
+          to_repo: Utilities
+          type: release_update
+          DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
+
