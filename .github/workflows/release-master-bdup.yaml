@@ -1,0 +1,86 @@
+name: Integration test and release
+# Integration test when the building image has been updated
+on:
+  workflow_run:
+    workflows: [Build and test with dev bdup]
+    types:
+      - completed
+
+jobs:
+  Integration_test:
+    uses: NWChemEx-CI-test/.github/.github/workflows/build_test-dev_tmpl.yaml@master
+    with:
+      repo: Utilities
+      clang-build: false
+      gcc-build: true
+      ninja_build: true
+      test: true
+      integration_test: true
+      install: true
+      build_image_tag: test
+    secrets: inherit
+    #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+    #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
+  Merge-dev-to-master:
+    runs-on: ubuntu-latest
+    steps:
+        uses: actions/checkout@v3
+      - name: merge dev to master
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: dev
+          target_branch: master
+          github_token: ${{ secrets.GITHUB_TOKEN }}      
+  Release:
+    runs-on: ubuntu-latest
+      uses: NWChemEx-CI-test/.github/.github/workflows/release-master_tmpl.yaml@master
+      with:
+        repo: Utilities
+      secrets: inherit
+
+  Update-repo_dispatch:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repos: [TensorWrapper, PluginPlay]
+      uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
+      with:
+        to_repo: ${{ matrix.repos }}
+        type: build_update
+        DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
+        #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+        #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
+        
+        
+        
+        #build-with-gcc:
+        #  uses: NWChemEx-CI-test/.github/.github/workflows/build_test_release_tmpl.yaml@master
+        #  with: 
+        #    repo: Utilities
+        #    clang-build: false
+        #    gcc-build: true
+        #    ninja_build: true
+        #    test: false
+        #    integration_test: false
+        #    install: true
+        #  secrets: inherit 
+        #  #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+        #  #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
+        #build-release-image:
+        #  runs-on: ubuntu-latest
+        #  secrets: inherit
+        #      #  #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+        #      #  #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
+        #  steps:
+        #    - name: Login to GitHub Container Registry
+        #      uses: docker/login-action@v1
+        #      with:
+        #        registry: ghcr.io
+        #        username: ${{ github.actor }}
+        #        #password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+        #        password: ${{ secrets.DOCKER_PAT }}
+        #    - name: tag the test image as stable to release
+        #      run: |
+        #        docker tag ghcr.io/NWChemEx-CI-test/release_utilities:test ghcr.io/NWChemEx-CI-test/release_utilities:stable
+        #        docker push ghcr.io/NWChemEx-CI-test/release_utilities:stable

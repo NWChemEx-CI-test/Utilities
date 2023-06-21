@@ -1,0 +1,51 @@
+name: Build and test with dev
+# build and test when the building image not updated
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+        # Utilities is special since it uses the building image of ParallelZone
+        # No need to check if build.Dockfile has been changed or not
+        #
+        #docker-file-changes:
+        #  runs-on: ubuntu-latest
+        #  outputs:
+        #    build_dockfile: ${{ steps.changes.outputs.bdfile }}
+        #  steps:
+        #  - uses: actions/checkout@v3
+        #  - uses: dorny/paths-filter@v2
+        #    id: changes
+        #    with:
+        #      filters: |
+        #        bdfile:
+        #          - 'build.Dockfile'
+
+        #update-building-image:
+        #  runs-on: ubuntu-latest
+        #  needs: docker-file-changes
+        #  if: ${{ needs.docker-file-changes.outputs.build_dockfile == 'true' }}
+        #  uses: NWChemEx-CI-test/.github/.github/workflows/update_building_image_tmpl.yaml@master
+        #  with:
+        #    repo_name: Utilities
+
+  build-with-gcc:
+    uses: NWChemEx-CI-test/.github/.github/workflows/build_test_dev_tmpl.yaml@master
+    with: 
+      repo: Utilities
+      clang-build: false
+      gcc-build: true
+      ninja_build: true
+      test: true
+      integration_test: false
+      install: false
+      build_image_tag: stable
+    secrets: inherit 
+    #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+    #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
+  
+  merge-pr-to-dev:
+    uses: "pascalgn/automerge-action@v0.15.6"
+    env:
+      GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

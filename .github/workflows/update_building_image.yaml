@@ -1,5 +1,7 @@
 name: Rebuild building image
 on:
+        # Utilities uses the building image of PluginPlay, so
+        # only a build_update dispatch can invoke this workflow
   repository_dispatch:
     types: build_update
 
@@ -9,8 +11,8 @@ jobs:
     steps:
       - name: Update the building tool image
         run: |
-          docker tag ghcr.io/yzhang-23/build_parallelzone:v1 ghcr.io/yzhang-23/build_utilities:v1
-          docker push ghcr.io/yzhang-23/build_utilities:v1
+          docker tag ghcr.io/NWChemEx-CI-test/build_parallelzone:test ghcr.io/NWChemEx-CI-test/build_utilities:test
+          docker push ghcr.io/NWChemEx-CI-test/build_utilities:test
       - name: Send a release update repo dispatch
         uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
         with:
