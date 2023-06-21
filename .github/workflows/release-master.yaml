@@ -33,14 +33,15 @@ jobs:
           type: now
           from_branch: dev
           target_branch: master
-          github_token: ${{ secrets.GITHUB_TOKEN }}      
-    #  Release:
-    #    runs-on: ubuntu-latest
-    #    uses: NWChemEx-CI-test/.github/.github/workflows/release-master_tmpl.yaml@master
-    #    with:
-    #      repo: Utilities
-    #    secrets: inherit
-    #
+          github_token: ${{ secrets.GITHUB_TOKEN }}     
+
+  Release:
+    runs-on: ubuntu-latest
+    uses: NWChemEx-CI-test/.github/.github/workflows/release-master_tmpl.yaml@master
+    with:
+      repo: Utilities
+    secrets: inherit
+
     #  Update-repo_dispatch:
     #    runs-on: ubuntu-latest
     #    strategy:
