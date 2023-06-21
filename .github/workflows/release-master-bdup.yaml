@@ -22,7 +22,7 @@ jobs:
     #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
 
-  Merge-dev-to-master:
+  merge:
     runs-on: ubuntu-latest
     steps:
       uses: actions/checkout@v3
