@@ -5,13 +5,13 @@ on:
 
 jobs:
   upload-a-file:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v3
-    - run: |
-        echo "repo1_updated=true" > update_record.txt
-        echo "repo2_updated=false" >> update_record.txt
-    - uses: actions/upload-artifact@v3
-      with:
-        name: my-artifact
-        path: update_record.txt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          echo "repo1_updated=true" > update_record.txt
+          echo "repo2_updated=false" >> update_record.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: update_record.txt
