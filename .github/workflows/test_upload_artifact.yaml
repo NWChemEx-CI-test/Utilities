@@ -2,7 +2,8 @@ name: Test upload artifact
 
 on:
   workflow_dispatch: # only working in master?
-    branches: [dev_pr]
+    branches: 
+      - dev_pr
         #push:
         #  branches:
         #    - dev_pr
