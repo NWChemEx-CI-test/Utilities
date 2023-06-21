@@ -3,6 +3,7 @@ name: Test download artifact
 on:
   workflow_run:
     workflows: [Test upload artifact]
+    branches: [dev_pr]
     types:
       - completed
 
