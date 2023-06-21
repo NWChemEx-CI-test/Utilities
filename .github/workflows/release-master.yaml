@@ -22,18 +22,18 @@ jobs:
     #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
 
-    #  Merge:
-    #    runs-on: ubuntu-latest
-    #    steps:
-    #      - name: checkout
-    #        uses: actions/checkout@v3
-    #      - name: merge dev to master
-    #        uses: devmasx/merge-branch@master
-    #        with:
-    #          type: now
-    #          from_branch: dev
-    #          target_branch: master
-    #          github_token: ${{ secrets.GITHUB_TOKEN }}      
+  Merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: merge dev to master
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: dev
+          target_branch: master
+          github_token: ${{ secrets.GITHUB_TOKEN }}      
     #  Release:
     #    runs-on: ubuntu-latest
     #    uses: NWChemEx-CI-test/.github/.github/workflows/release-master_tmpl.yaml@master
