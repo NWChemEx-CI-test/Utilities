@@ -20,6 +20,8 @@ jobs:
            workflow: test_upload_artifact.yaml
        - name: check the variable values
          run: |
+           ls
+           unzip my-artifact.zip
            source update-record.txt
            echo ${repo1_updated}
            echo ${repo2_updated}
