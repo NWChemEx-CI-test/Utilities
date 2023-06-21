@@ -22,38 +22,38 @@ jobs:
     #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
 
-  Merge:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: merge dev to master
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          from_branch: dev
-          target_branch: master
-          github_token: ${{ secrets.GITHUB_TOKEN }}      
-  Release:
-    runs-on: ubuntu-latest
-    uses: NWChemEx-CI-test/.github/.github/workflows/release-master_tmpl.yaml@master
-    with:
-      repo: Utilities
-    secrets: inherit
-
-  Update-repo_dispatch:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        repos: [TensorWrapper, PluginPlay]
-    steps:
-      uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
-      with:
-        to_repo: ${{ matrix.repos }}
-        type: build_update
-        DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
-        #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
-        #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
+    #  Merge:
+    #    runs-on: ubuntu-latest
+    #    steps:
+    #      - name: checkout
+    #        uses: actions/checkout@v3
+    #      - name: merge dev to master
+    #        uses: devmasx/merge-branch@master
+    #        with:
+    #          type: now
+    #          from_branch: dev
+    #          target_branch: master
+    #          github_token: ${{ secrets.GITHUB_TOKEN }}      
+    #  Release:
+    #    runs-on: ubuntu-latest
+    #    uses: NWChemEx-CI-test/.github/.github/workflows/release-master_tmpl.yaml@master
+    #    with:
+    #      repo: Utilities
+    #    secrets: inherit
+    #
+    #  Update-repo_dispatch:
+    #    runs-on: ubuntu-latest
+    #    strategy:
+    #      matrix:
+    #        repos: [TensorWrapper, PluginPlay]
+    #    steps:
+    #      uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
+    #      with:
+    #        to_repo: ${{ matrix.repos }}
+    #        type: build_update
+    #        DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
+    #        #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+    #        #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
         
         
         
