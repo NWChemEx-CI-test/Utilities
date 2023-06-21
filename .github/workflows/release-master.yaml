@@ -42,19 +42,19 @@ jobs:
       repo: Utilities
     secrets: inherit
 
-    #  Update-repo_dispatch:
-    #    runs-on: ubuntu-latest
-    #    strategy:
-    #      matrix:
-    #        repos: [TensorWrapper, PluginPlay]
-    #    steps:
-    #      uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
-    #      with:
-    #        to_repo: ${{ matrix.repos }}
-    #        type: build_update
-    #        DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
-    #        #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
-    #        #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
+  Update-repo_dispatch:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repos: [TensorWrapper, PluginPlay]
+    steps:
+      uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
+      with:
+        to_repo: ${{ matrix.repos }}
+        type: build_update
+        DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
+        #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+        #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
         
         
         
