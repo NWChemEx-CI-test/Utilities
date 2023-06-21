@@ -21,6 +21,6 @@ jobs:
        - name: check the variable values
          run: |
            ls
-           source ./update-record.txt
+           source update_record.txt
            echo ${repo1_updated}
            echo ${repo2_updated}
