@@ -10,7 +10,7 @@ name: Final release
 on: 
   repository_dispatch:
     types: final_release
-  workflow_dispatch:
+    #workflow_dispatch:
 
 jobs:
   create_update_artifact:
