@@ -1,8 +1,8 @@
-name: Integration test and release
-# Integration test when the building image has been updated
+name: Integration test with the stable building image
+
 on:
   workflow_run:
-    workflows: [Build and test with dev bdup]
+    workflows: [Build and test with dev]
     types:
       - completed
 
@@ -17,30 +17,51 @@ jobs:
       test: true
       integration_test: true
       install: true
-      build_image_tag: test
+      build_image_tag: stable
     secrets: inherit
     #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
 
-  merge:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: merge dev to master
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          from_branch: dev
-          target_branch: master
-          github_token: ${{ secrets.GITHUB_TOKEN }}      
-  Release:
-    runs-on: ubuntu-latest
-    uses: NWChemEx-CI-test/.github/.github/workflows/release-master_tmpl.yaml@master
-    with:
-      repo: Utilities
-    secrets: inherit
+    #Merge:
+    #  runs-on: ubuntu-latest
+    #  steps:
+    #    - name: checkout
+    #      uses: actions/checkout@v3
+    #    - name: merge dev to master
+    #      uses: devmasx/merge-branch@master
+    #      with:
+    #        type: now
+    #        from_branch: dev
+    #        target_branch: master
+    #        github_token: ${{ secrets.GITHUB_TOKEN }}     
 
+    #Release:
+    #  runs-on: ubuntu-latest
+    #  uses: NWChemEx-CI-test/.github/.github/workflows/release-master_tmpl.yaml@master
+    #  with:
+    #    repo: Utilities
+    #  secrets: inherit
+
+# Create an artifact to record updates
+#upload-a-file:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - run: |
+#
+#          echo "scfgradient_updated=false" > update_record.dat
+#          echo "nux_updated=false" >> update_record.dat
+#          echo "casscf_updated=false" >> update_record.dat
+#          echo "friendzone_updated=false" >> update_record.dat
+#          echo "mp2_updated=false" >> update_record.dat
+#          echo "nwpw_updated=false" >> update_record.dat
+#          echo "nwxelsi_updated=false" >> update_record.dat
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: update-artifact
+#          path: update_record.dat
+
+# Update other repos
   Update-repo_dispatch:
     runs-on: ubuntu-latest
     strategy:
@@ -52,6 +73,8 @@ jobs:
           to_repo: ${{ matrix.repos }}
           type: build_update
           DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
+          from_repo: Utilities
+          initial_repo: Utilities
           #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
           #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
         
