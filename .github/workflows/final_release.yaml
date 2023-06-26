@@ -21,7 +21,7 @@ jobs:
         uses: xSAVIKx/artifact-exists-action@v0
         id: check_update_artifact
         with:
-          name: 'update-artifact'
+          name: update-artifact
       - name: create the artifact if it does not exist
         if: ${{ steps.check_update_artifact.outputs.exists == false }}
         run: |
