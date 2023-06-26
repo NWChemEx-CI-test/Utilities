@@ -11,8 +11,8 @@ jobs:
     steps:
       - name: Update the building tool image
         run: |
-          docker tag ghcr.io/NWChemEx-CI-test/build_parallelzone:test ghcr.io/NWChemEx-CI-test/build_utilities:test
-          docker push ghcr.io/NWChemEx-CI-test/build_utilities:test
+          docker tag ghcr.io/nwchemex-ci-test/build_parallelzone:test ghcr.io/nwchemex-ci-test/build_utilities:test
+          docker push ghcr.io/nwchemex-ci-test/build_utilities:test
       - name: Send a release update repo dispatch
         uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
         with:
