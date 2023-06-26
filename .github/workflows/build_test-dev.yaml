@@ -47,6 +47,7 @@ jobs:
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
     
   merge:
+    runs-on: ubuntu-latest
     steps:
       - name: merge pr to dev
         uses: pascalgn/automerge-action@v0.15.6
