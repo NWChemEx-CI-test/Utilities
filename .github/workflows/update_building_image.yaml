@@ -14,9 +14,11 @@ jobs:
           docker tag ghcr.io/nwchemex-ci-test/build_parallelzone:test ghcr.io/nwchemex-ci-test/build_utilities:test
           docker push ghcr.io/nwchemex-ci-test/build_utilities:test
       - name: Send a release update repo dispatch
-        uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
+        uses: nwchemex-ci-test/.github/actions/repo_dispatch@master
         with:
           to_repo: Utilities
           type: release_update
           DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
+          from_repo: Utilities
+          initial_repo: Utilities
 

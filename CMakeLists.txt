@@ -49,11 +49,23 @@ if("${BUILD_TESTING}")
         FIND_TARGET Catch2::Catch2
         VERSION v2.13.8
     )
+    #cmaize_add_tests(
+    #    test_utilities
+    #    SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/tests"
+    #    INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/utilities"
+    #    DEPENDS Catch2 utilities
+    #)
     cmaize_add_tests(
-        test_utilities
-        SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/tests"
-        INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/utilities"
-        DEPENDS Catch2 utilities
+        test_unit_${PROJECT_NAME}
+        SOURCE_DIR "${tests_src_dir}/unit_${PROJECT_NAME}"
+        INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/src/${PROJECT_NAME}"
+        DEPENDS Catch2 ${PROJECT_NAME}_examples
+    )
+    cmaize_add_tests(
+        test_integration_${PROJECT_NAME}
+        SOURCE_DIR "${tests_src_dir}/integration_${PROJECT_NAME}"
+        INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/src/${PROJECT_NAME}"
+        DEPENDS Catch2 ${PROJECT_NAME}_examples
     )
 endif()
 
