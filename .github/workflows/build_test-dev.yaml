@@ -54,3 +54,11 @@ jobs:
         uses: pascalgn/automerge-action@v0.15.6
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: repo dispatch
+        uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
+        with:
+          to_repo: Utilities
+          type: integ_test
+          DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
+          from_repo: Utilities
+          initial_repo: Utilities

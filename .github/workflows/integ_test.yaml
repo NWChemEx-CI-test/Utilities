@@ -1,10 +1,12 @@
 name: Integration test with the stable building image
 
 on:
-  workflow_run:
-    workflows: [Build and test with dev]
-    types:
-      - completed
+  repository_dispatch:
+    types: integ_test
+        #workflow_run:
+        #  workflows: [Build and test with dev]
+        #  types:
+        #    - completed
 
 jobs:
   Integration_test:
@@ -25,7 +27,7 @@ jobs:
 # Update other repos
   Update-repo_dispatch:
     runs-on: ubuntu-latest
-    needs: [Integration_test, Merge, Release]
+    needs: Integration_test
     strategy:
       matrix:
         repos: [TensorWrapper, PluginPlay]
