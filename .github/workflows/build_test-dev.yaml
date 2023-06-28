@@ -62,3 +62,4 @@ jobs:
           DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
           from_repo: Utilities
           initial_repo: Utilities
+          branch: ${{ GITHUB_HEAD_REF }}

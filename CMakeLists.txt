@@ -42,6 +42,7 @@ cmaize_add_library(
 )
 
 if("${BUILD_TESTING}")
+    set(tests_src_dir "${CMAKE_CURRENT_LIST_DIR}/tests")
     cmaize_find_or_build_dependency(
         Catch2
         URL github.com/catchorg/Catch2
