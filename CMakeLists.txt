@@ -60,13 +60,13 @@ if("${BUILD_TESTING}")
         test_unit_${PROJECT_NAME}
         SOURCE_DIR "${tests_src_dir}/unit_${PROJECT_NAME}"
         INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}"
-        DEPENDS Catch2 ${PROJECT_NAME}_examples
+        DEPENDS Catch2 utilities
     )
     cmaize_add_tests(
         test_integration_${PROJECT_NAME}
         SOURCE_DIR "${tests_src_dir}/integration_${PROJECT_NAME}"
         INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}"
-        DEPENDS Catch2 ${PROJECT_NAME}_examples
+        DEPENDS Catch2 utilities
     )
 endif()
 
