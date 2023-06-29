@@ -40,7 +40,7 @@ jobs:
           #current_from_repo=${current_from_repo,,}
           #echo "${current_from_repo}_updated=true" >> update_record.dat
       - name: upload the created artifact
-        if: ${{ steps.check_update_artifact.outputs.exists == false }}
+        if: ${{ steps.check_update_artifact.outputs.exists == "false" }}
         uses: actions/upload-artifact@v3
         with:
           name: update-artifact
