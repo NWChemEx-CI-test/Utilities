@@ -17,13 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: check if the update artifact exist
-        uses: xSAVIKx/artifact-exists-action@v0
-        id: check_update_artifact
-        with:
-          name: update-artifact
+        - name: check if the update artifact exist
+          uses: xSAVIKx/artifact-exists-action@v0
+          id: check_update_artifact
+          with:
+            name: update-artifact
       - name: create the artifact if it does not exist
-        if: ${{ steps.check_update_artifact.outputs.exists == false }}
+        #if: ${{ steps.check_update_artifact.outputs.exists == false }}
         run: |
           # End repos for all
           #echo "scfgradient_updated=false" > update_record.dat
@@ -34,6 +34,7 @@ jobs:
           #echo "nwpw_updated=false" >> update_record.dat
           #echo "nwxelsi_updated=false" >> update_record.dat
           # End repos for test now
+          echo "artifact exists?" ${{ steps.check_update_artifact.outputs.exists }}
           echo "simde_updated=false" > update_record.dat
           #current_from_repo=${{ github.event.client_payload.from_repo }}
           #current_from_repo=${current_from_repo,,}
