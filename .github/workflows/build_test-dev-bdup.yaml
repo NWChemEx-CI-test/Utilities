@@ -1,4 +1,3 @@
-name: Build and test with dev bdup
 # build and test when the building image is updated
 on:
   repository_dispatch:
@@ -7,7 +6,7 @@ on:
 jobs:
   build:
     uses: NWChemEx-CI-test/.github/.github/workflows/build_test_dev_tmpl.yaml@master
-    with: 
+    with:
       repo: Utilities
       clang-build: false
       gcc-build: true
@@ -16,13 +15,48 @@ jobs:
       integration_test: false
       install: false
       build_image_tag: test
-    secrets: inherit 
+    secrets: inherit
     #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
 
   merge:
+    needs: build
     steps:
       - name: merge pr to dev
         uses: pascalgn/automerge-action@v0.15.6
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+  Integration_test:
+    uses: NWChemEx-CI-test/.github/.github/workflows/build_test-dev_tmpl.yaml@master
+    needs: [build, merge]
+    with:
+      repo: Utilities
+      clang-build: false
+      gcc-build: true
+      ninja_build: true
+      test: true
+      integration_test: true
+      install: true
+      build_image_tag: test
+    secrets: inherit
+    #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+    #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
+    
+# Update other repos
+  Update-repo_dispatch:
+    needs: [build, merge, Integration_test]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repos: [TensorWrapper, PluginPlay]
+    steps:
+      - uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
+        with:
+          to_repo: ${{ matrix.repos }}
+          type: build_update
+          DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
+          from_repo: Utilities
+          initial_repo: Utilities
+          #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+          #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
