@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Update the building tool image
         run: |
+          docker pull ghcr.io/nwchemex-ci-test/build_parallelzone:test
           docker tag ghcr.io/nwchemex-ci-test/build_parallelzone:test ghcr.io/nwchemex-ci-test/build_utilities:test
           docker push ghcr.io/nwchemex-ci-test/build_utilities:test
       - name: Send a release update repo dispatch
