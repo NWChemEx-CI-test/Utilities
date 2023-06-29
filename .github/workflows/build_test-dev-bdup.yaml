@@ -19,15 +19,6 @@ jobs:
     #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
 
-    #merge:
-    #  runs-on: ubuntu-latest
-    #  needs: build
-    #  steps:
-    #    - name: merge pr to dev
-    #      uses: pascalgn/automerge-action@v0.15.6
-    #      env:
-    #        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
   Integration_test:
     uses: NWChemEx-CI-test/.github/.github/workflows/build_test-dev_tmpl.yaml@master
     needs: build
@@ -44,7 +35,7 @@ jobs:
     #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
 
-    # Update other repos
+# Update other repos
   Update-repo_dispatch:
     needs: [build, Integration_test]
     runs-on: ubuntu-latest
