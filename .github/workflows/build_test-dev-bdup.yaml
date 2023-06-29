@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    uses: NWChemEx-CI-test/.github/.github/workflows/build_test_dev_tmpl.yaml@master
+    uses: NWChemEx-CI-test/.github/.github/workflows/build_test-dev_tmpl.yaml@master
     with:
       repo: Utilities
       clang-build: false
