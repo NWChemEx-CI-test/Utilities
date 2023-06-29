@@ -14,10 +14,6 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-<<<<<<< HEAD
-          #password: ${{ secrets.CONTAINER_REPO_TOKEN }}
-=======
->>>>>>> ebca989c87a134f65edebfd4e020b9ef82e9b996
           password: ${{ secrets.DOCKER_PAT }}
       - name: Update the building tool image
         run: |
