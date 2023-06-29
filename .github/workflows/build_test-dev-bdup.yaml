@@ -20,10 +20,7 @@ jobs:
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
 
   merge:
-<<<<<<< HEAD
-=======
     runs-on: ubuntu-latest
->>>>>>> ebca989c87a134f65edebfd4e020b9ef82e9b996
     needs: build
     steps:
       - name: merge pr to dev
@@ -46,12 +43,7 @@ jobs:
     secrets: inherit
     #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
-<<<<<<< HEAD
 
-
-=======
-    
->>>>>>> ebca989c87a134f65edebfd4e020b9ef82e9b996
 # Update other repos
   Update-repo_dispatch:
     needs: [build, merge, Integration_test]
