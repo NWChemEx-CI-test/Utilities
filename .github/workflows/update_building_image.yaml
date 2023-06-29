@@ -1,6 +1,6 @@
 name: Rebuild building image
 on:
-        # Utilities uses the building image of PluginPlay, so
+        # Utilities uses the building image of ParallelZone, so
         # only a build_update dispatch can invoke this workflow
   repository_dispatch:
     types: build_update
@@ -9,8 +9,16 @@ jobs:
   rebuild_building:
     runs-on: ubuntu-latest
     steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          #password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+          password: ${{ secrets.DOCKER_PAT }}
       - name: Update the building tool image
         run: |
+          docker pull ghcr.io/nwchemex-ci-test/build_parallelzone:test
           docker tag ghcr.io/nwchemex-ci-test/build_parallelzone:test ghcr.io/nwchemex-ci-test/build_utilities:test
           docker push ghcr.io/nwchemex-ci-test/build_utilities:test
       - name: Send a release update repo dispatch
