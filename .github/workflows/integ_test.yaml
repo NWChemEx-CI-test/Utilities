@@ -1,11 +1,9 @@
 name: Integration test with the stable building image
 
 on:
-  workflow_run:
-    workflows: [Build and test with dev]
-    types:
-      - completed
-
+  repository_dispatch:
+    types: integ_test
+  
 jobs:
   Integration_test:
     uses: NWChemEx-CI-test/.github/.github/workflows/build_test-dev_tmpl.yaml@master
