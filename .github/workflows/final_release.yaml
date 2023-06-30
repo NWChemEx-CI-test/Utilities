@@ -107,7 +107,7 @@ jobs:
       - name: testing
         run: |
           echo ${{ needs.check_update_record.outputs.all_updated }}
-          echo "check_result =" ${{ needs.check_update_record.outputs.all_updated == true }}
+          echo "check_result =" ${{ needs.check_update_record.outputs.all_updated == 'true' }}
   Merge:
     runs-on: ubuntu-latest
     needs: [create_update_artifact, check_update_record]
@@ -121,7 +121,7 @@ jobs:
           type: now
           from_branch: dev
           target_branch: master
-          github_token: ${{ secrets.GITHUB_TOKEN }}     
+          github_token: ${{ secrets.DOCKER_PAT }}     
 
           #repos: <
           #  [Utilities, TensorWrapper, PluginPlay, Chemist, SimDE,
@@ -131,7 +131,8 @@ jobs:
   Release:
     strategy:
       matrix:
-        repos: [Utilities, TensorWrapper, PluginPlay, Chemist, SimDE]
+        repos: Utilities
+        #repos: [Utilities, TensorWrapper, PluginPlay, Chemist, SimDE]
     needs: [create_update_artifact, check_update_record]
     if: ${{ needs.check_update_record.outputs.all_updated == 'true' }}
     uses: NWChemEx-CI-test/.github/.github/workflows/release-master_tmpl.yaml@master
