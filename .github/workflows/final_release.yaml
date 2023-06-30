@@ -99,6 +99,12 @@ jobs:
          with:
            name: update-artifact
            path: update_record.dat
+
+  update_check:
+    needs: [create_update_artifact, check_update_record]
+    steps:
+      - name: testing
+        echo "needs.check_update_record.outputs.all_updated =" ${{ needs.check_update_record.outputs.all_updated }}
   Merge:
     runs-on: ubuntu-latest
     needs: [create_update_artifact, check_update_record]
