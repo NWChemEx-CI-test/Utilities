@@ -106,6 +106,7 @@ jobs:
     steps:
       - name: testing
         run: |
+          echo ${{ needs.check_update_record.outputs.all_updated }}
           echo "check_result =" ${{ needs.check_update_record.outputs.all_updated == 'true' }}
   Merge:
     runs-on: ubuntu-latest
