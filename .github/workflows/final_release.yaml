@@ -107,7 +107,7 @@ jobs:
       - name: testing
         run: |
           echo ${{ needs.check_update_record.outputs.all_updated }}
-          echo "check_result =" ${{ needs.check_update_record.outputs.all_updated == 'true' }}
+          echo "check_result =" ${{ needs.check_update_record.outputs.all_updated == true }}
   Merge:
     runs-on: ubuntu-latest
     needs: [create_update_artifact, check_update_record]
