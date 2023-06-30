@@ -23,7 +23,7 @@ jobs:
         with:
           name: update-artifact
       - name: create the artifact if it does not exist
-        #if: ${{ steps.check_update_artifact.outputs.exists == false }}
+        if: ${{ steps.check_update_artifact.outputs.exists == false }}
         run: |
           # End repos for all
           #echo "scfgradient_updated=false" > update_record.dat
@@ -73,6 +73,7 @@ jobs:
          id: check_var
          run: |
            current_from_repo=${{ github.event.client_payload.from_repo }}
+           echo "current_from_repo = " ${{ github.event.client_payload.from_repo }}
            current_from_repo=${current_from_repo,,}
            echo "${current_from_repo}_updated=true" >> update_record.dat
            source update_record.dat
