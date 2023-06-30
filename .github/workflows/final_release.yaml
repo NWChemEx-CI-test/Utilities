@@ -79,7 +79,7 @@ jobs:
          id: check_var
          run: |
            current_from_repo=${{ github.event.client_payload.from_repo }}
-           echo "current_from_repo = " ${{ github.event.client_payload.from_repo }}
+           #echo "current_from_repo = " ${{ github.event.client_payload.from_repo }}
            current_from_repo=${current_from_repo,,}
            echo "${current_from_repo}_updated=true" >> update_record.dat
            source update_record.dat
@@ -90,7 +90,8 @@ jobs:
            #   [ $(mp2_updated == true ] && \
            #   [ $(nwpw_updated == true ] && \
            #   [ $(nwxelsi_updated == true ]; then
-           if [[ ${simde_updated} == true ]]; then
+           echo "simde_updated = " ${simde_updated}
+           if [ ${simde_updated} == true ]; then
               echo "updated='true'" >> "$GITHUB_OUTPUT"
            fi
        - name: Upload artifact
