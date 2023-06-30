@@ -46,7 +46,7 @@ jobs:
           #current_from_repo=${current_from_repo,,}
           #echo "${current_from_repo}_updated=true" >> update_record.dat
       - name: upload the created artifact
-        #if: ${{ steps.check_update_artifact.outputs.exists == false }}
+        if: ${{ steps.check_update_artifact.outputs.exists == 'false' }}
         uses: actions/upload-artifact@v3
         with:
           name: update-artifact
@@ -101,7 +101,7 @@ jobs:
   Merge:
     runs-on: ubuntu-latest
     needs: [create_update_artifact, check_update_record]
-    if: ${{ needs.check_update_record.outputs.all_updated == true }}
+    if: ${{ needs.check_update_record.outputs.all_updated == 'true' }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -123,7 +123,7 @@ jobs:
       matrix:
         repos: [Utilities, TensorWrapper, PluginPlay, Chemist, SimDE]
     needs: [create_update_artifact, check_update_record]
-    if: ${{ needs.check_update_record.outputs.all_updated == true }}
+    if: ${{ needs.check_update_record.outputs.all_updated == 'true' }}
     uses: NWChemEx-CI-test/.github/.github/workflows/release-master_tmpl.yaml@master
     with:
       repo: ${{ matrix.repos }}
@@ -132,7 +132,7 @@ jobs:
   Delete-artifact:
     runs-on: ubuntu-test
     needs: [create_update_artifact, check_update_record]
-    if: ${{ needs.check_update_record.outputs.all_updated == true }}
+    if: ${{ needs.check_update_record.outputs.all_updated == 'true' }}
     steps:
       - uses: geekyeggo/delete-artifact@v2
         with:
