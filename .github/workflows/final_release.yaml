@@ -131,7 +131,7 @@ jobs:
   Release:
     strategy:
       matrix:
-        repos: Utilities
+        repos: [Utilities]
         #repos: [Utilities, TensorWrapper, PluginPlay, Chemist, SimDE]
     needs: [create_update_artifact, check_update_record]
     if: ${{ needs.check_update_record.outputs.all_updated == 'true' }}
