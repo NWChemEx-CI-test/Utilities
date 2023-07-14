@@ -46,8 +46,38 @@ jobs:
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
     
   merge:
+    needs: build
     steps:
       - name: merge pr to dev
         uses: pascalgn/automerge-action@v0.15.6
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+  Integration_test:
+    uses: NWChemEx-CI-test/.github/.github/workflows/build_test-dev_tmpl.yaml@master
+    needs: merge
+    with:
+      repo: Utilities
+      clang-build: false
+      gcc-build: true
+      ninja_build: true
+      test: true
+      integration_test: true
+      install: true
+      build_image_tag: stable
+    secrets: inherit
+
+  Update-repo_dispatch:
+    runs-on: ubuntu-latest
+    needs: Integration_test
+    strategy:
+      matrix:
+        repos: [TensorWrapper, PluginPlay]
+    steps:
+      - uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
+        with:
+          to_repo: ${{ matrix.repos }}
+          type: build_update
+          DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
+          from_repo: Utilities
+          initial_repo: Utilities
