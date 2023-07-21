@@ -1,15 +1,13 @@
-name: Test of send a repo dispatch
+name: Test sending client_payload
 on:
   workflow_dispatch:
-          #push:
-          #branches: master
 
 jobs:
-  repo_dispatch_test:
+  client_payload_test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target_repo: [PluginPlay, ParallelZone]
+        target_repo: [PluginPlay, TensorWrapper]
     steps:
       - name: Send release dispatches to target repos
         uses: NWChemEx-CI-test/.github/actions/repo_dispatch@master
@@ -17,6 +15,8 @@ jobs:
           to_repo: ${{ matrix.target_repo }}
           DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
           type: build_update
+          from_repo: Utilities
+          initial_repo: Utilities
           #secrets: inherit
             #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
             #DOCKER_PAT: {{ secrets.DOCKER_PAT }}

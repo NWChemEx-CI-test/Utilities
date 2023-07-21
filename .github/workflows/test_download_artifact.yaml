@@ -1,0 +1,26 @@
+name: Test download artifact
+
+on:
+  workflow_run:
+    workflows: [Test upload artifact]
+    branches: [dev_pr]
+    types:
+      - completed
+
+jobs:
+   download-a-file:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v3
+         # - uses: actions/download-artifact@v3
+       - name: Download artifact
+         uses: dawidd6/action-download-artifact@v2
+         with:
+           name: my-artifact
+           workflow: test_upload_artifact.yaml
+       - name: check the variable values
+         run: |
+           ls
+           source update_record.txt
+           echo ${repo1_updated}
+           echo ${repo2_updated}

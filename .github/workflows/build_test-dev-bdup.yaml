@@ -1,0 +1,28 @@
+name: Build and test with dev bdup
+# build and test when the building image is updated
+on:
+  repository_dispatch:
+    types: release_update
+
+jobs:
+  build:
+    uses: NWChemEx-CI-test/.github/.github/workflows/build_test_dev_tmpl.yaml@master
+    with: 
+      repo: Utilities
+      clang-build: false
+      gcc-build: true
+      ninja_build: true
+      test: true
+      integration_test: false
+      install: false
+      build_image_tag: test
+    secrets: inherit 
+    #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+    #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
+
+  merge:
+    steps:
+      - name: merge pr to dev
+        uses: pascalgn/automerge-action@v0.15.6
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
