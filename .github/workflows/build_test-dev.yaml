@@ -51,7 +51,8 @@ jobs:
       - name: merge pr to dev
         uses: pascalgn/automerge-action@v0.15.6
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.DOCKER_PAT }}"
+          MERGE_LABELS: ""
 
   Integration_test:
     uses: NWChemEx-CI-test/.github/.github/workflows/build_test-dev_tmpl.yaml@master
