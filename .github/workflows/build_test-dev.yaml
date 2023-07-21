@@ -67,6 +67,7 @@ jobs:
       integration_test: true
       install: true
       build_image_tag: stable
+      ref: dev
     secrets: inherit
     #CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
     #DOCKER_PAT: {{ secrets.DOCKER_PAT }}
