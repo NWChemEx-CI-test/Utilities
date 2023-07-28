@@ -14,33 +14,53 @@
  * limitations under the License.
  */
 
-#include "utilities/printing/word_wrap_stream.hpp"
+#pragma once
 #include "utilities/strings/string_tools.hpp"
 #include <iostream>
 #include <iterator>
+#include <memory>
+#include <ostream>
 #include <sstream>
 #include <vector>
 
 namespace utilities::printing {
 
-// Get the width type from WordWrapStream
-using width_type = typename WordWrapStream::width_type;
-
-namespace detail_ {
-
-// Define the PIMPL class
-class WordWrapBuffer : public std::streambuf {
+/** @brief An std::ostream that automatically wraps its contents if they
+ *         exceed the specified width.
+ *
+ *  WordWrapStream instances wrap another `std::ostream` instance. The resulting
+ *  WordWrapStram instance prints to the wrapped instance and behaves exactly
+ *  like the wrapped instance except that internally the WordWrapStream tracks
+ *  how many characters have been printed and will automatically insert a line
+ *  break when printing a word would cause the current line to have more
+ *  characters than a predefined width. The word wrap only occurs if the user
+ *  does not provide a newline character prior to a line reaching the predefined
+ *  width. If a newline character is encountered before that, the internal
+ *  counter is reset. Hence this class will preserve pre-existing formatting.
+ */
+class WordWrapStream : private std::streambuf, public std::ostream {
 public:
-    // Takes the ostream we're wrapping and the width
-    WordWrapBuffer(std::ostream* os, width_type w) noexcept :
-      m_os_(os), m_w_(w) {}
+    /// The type used to specify the predefined width
+    using width_type = unsigned long;
+
+    /** @brief Bestows an existing ostream with word wrapping abalities
+     *
+     * @param[in] os The address of the ostream instance we are wrapping. The
+     *               lifetime of the ostream is not managed by the resulting
+     *               WordWrapStream and it is the user's responsibility to
+     *               ensure @p os stays in scope.
+     * @param[in] w  The predefined width at which word wrapping occurs. Default
+     *               is 80 characters.
+     *
+     * @throw std::bad_alloc if there is insufficient memory to make the PIMPL
+     *                       instance. Strong throw guarantee.
+     */
+    explicit WordWrapStream(std::ostream* os, width_type w = 80) :
+      std::ostream(this), m_os_(os), m_w_(w) {}
 
 protected:
     // This function does the heavy lifting
     std::streamsize xsputn(const char* s, std::streamsize n) override {
-        using itr_type = std::istream_iterator<std::string>;
-        std::istringstream iss(std::string(s, s + n));
-
         // Break paragraph into sentences
         auto sentences = strings::split_string(std::string(s, s + n), "\n");
 
@@ -100,12 +120,12 @@ protected:
         return n;
     }
 
-    int overflow(int_type c) override {
+    int overflow(std::streambuf::int_type c) override {
         if(m_nchars_ == m_w_) {
             (*m_os_) << std::endl;
             m_nchars_ = 0;
         }
-        (*m_os_) << traits_type::to_char_type(c);
+        (*m_os_) << std::streambuf::traits_type::to_char_type(c);
         ++m_nchars_;
 
         return c;
@@ -120,17 +140,6 @@ private:
 
     /// How many characters we've written
     width_type m_nchars_ = 0;
-}; // class WordWrapBuffer
-
-} // namespace detail_
-
-//--------------------WordWrapStream Definitions--------------------------------
-
-WordWrapStream::WordWrapStream(std::ostream* os, width_type w) :
-  m_pimpl_(std::make_unique<detail_::WordWrapBuffer>(os, w)) {
-    rdbuf(m_pimpl_.get());
-}
-
-WordWrapStream::~WordWrapStream() noexcept = default;
+};
 
 } // namespace utilities::printing
