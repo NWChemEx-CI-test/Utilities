@@ -24,49 +24,49 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(nwx_cmake)
 list(APPEND CMAKE_MODULE_PATH "${nwx_cmake_SOURCE_DIR}/cmake")
 
-option(BUILD_TESTING "Should we build the tests?" OFF)
-option(BUILD_DOCS "Should we build the documentation?" OFF)
-
 set(
     CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${PROJECT_SOURCE_DIR}/cmake"
     CACHE STRING "" FORCE
 )
 include(get_cmaize)
+include(nwx_versions)
+
+option(BUILD_TESTING "Should we build the tests?" ON)
+option(BUILD_DOCS "Should we build the documentation?" OFF)
+
+set(utilities_inc_dir "${CMAKE_CURRENT_LIST_DIR}/include/${PROJECT_NAME}")
+set(utilities_src_dir "${CMAKE_CURRENT_LIST_DIR}/src/${PROJECT_NAME}")
+
 include(nwx_cxx_api_docs)
-nwx_cxx_api_docs("${CMAKE_CURRENT_SOURCE_DIR}/utilities")
+nwx_cxx_api_docs("README.md" "${project_inc_dir}" "${project_src_dir}")
 
 cmaize_add_library(
-    utilities
-    SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/src/utilities:"
-    INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/include/utilities"
+    ${PROJECT_NAME}
+    SOURCE_DIR "${utilities_src_dir}"
+    INCLUDE_DIRS "${utilities_inc_dir}"
 )
 
 if("${BUILD_TESTING}")
-    set(tests_src_dir "${CMAKE_CURRENT_LIST_DIR}/tests")
     cmaize_find_or_build_dependency(
         Catch2
         URL github.com/catchorg/Catch2
         BUILD_TARGET Catch2
         FIND_TARGET Catch2::Catch2
-        VERSION v2.13.8
-    )
-    #cmaize_add_tests(
-    #    test_utilities
-    #    SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/tests"
-    #    INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/utilities"
-    #    DEPENDS Catch2 utilities
-    #)
-    cmaize_add_tests(
-        test_unit_${PROJECT_NAME}
-        SOURCE_DIR "${tests_src_dir}/unit_${PROJECT_NAME}"
-        INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/src/${PROJECT_NAME}"
-        DEPENDS Catch2 utilities
+        VERSION ${NWX_CATCH2_VERSION}
     )
     cmaize_add_tests(
-        test_integration_${PROJECT_NAME}
-        SOURCE_DIR "${tests_src_dir}/integration_${PROJECT_NAME}"
-        INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/src/${PROJECT_NAME}"
-        DEPENDS Catch2 utilities
+        test_unit_utilities
+        SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/tests/unit_${PROJECT_NAME}"
+        INCLUDE_DIRS "${utilities_src_dir}"
+        DEPENDS Catch2 ${PROJECT_NAME}
+    
+    )
+    cmaize_add_tests(
+        test_integration_utilities
+        SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/tests/integration_${PROJECT_NAME}"
+        INCLUDE_DIRS "${utilities_src_dir}"
+        DEPENDS Catch2 ${PROJECT_NAME}
+
     )
 endif()
 
