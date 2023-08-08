@@ -25,7 +25,7 @@ jobs:
 
   update-base-image:
     runs-on: ubuntu-latest
-    if: ${{ inputs.update_base_image == true }}
+    if: ${{ inputs.update_base_image == 'true' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -54,13 +54,13 @@ jobs:
           password: ${{ secrets.DOCKER_PAT }}
       - uses: actions/checkout@v3
       - name: Build temporary building image for gcc case I
-        if: ${{ inputs.update_base_image == true }}
+        if: ${{ inputs.update_base_image == 'true' }}
         run: |
           docker build -t ghcr.io/nwchemex-ci-test/building-image:gcc-tmp \
           -f build_tmp.Dockerfile . --build-arg btag=test 
           docker push ghcr.io/nwchemex-ci-test/building-image:gcc-tmp
       - name: Build temporary building image for gcc case II
-        if: ${{ inputs.update_base_image == false }}
+        if: ${{ inputs.update_base_image == 'false' }}
         run: |
           docker build -t ghcr.io/nwchemex-ci-test/building-image:gcc-tmp \
           -f build_tmp.Dockerfile . --build-arg btag=stable 
