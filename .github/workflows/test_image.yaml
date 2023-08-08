@@ -1,0 +1,18 @@
+name: Test Docker Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-image-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the image
+        run: |
+          docker build -t test_image -f test.Dockerfile .
+      - name: Test the image built in last step
+        run: |
+          docker pull test_image
+          docker run -t test_image
+
