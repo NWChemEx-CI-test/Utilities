@@ -89,7 +89,7 @@ jobs:
 
   build-test-clang:
     uses: NWChemEx-CI-test/.github/.github/workflows/build_test_release_tmpl.yaml@master
-    needs: build-building-image-clang
+    needs: build-building-image
     if: always() && (needs.build-building-image.result == 'success')
     with:
       repo: PluginPlay
