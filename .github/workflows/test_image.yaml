@@ -14,6 +14,6 @@ jobs:
           docker save -o test_image.tar test_image
       - name: Test the image built in last step
         run: |
-          docker load test_image.tar
+          docker load -i test_image.tar
           docker run -t test_image
 
