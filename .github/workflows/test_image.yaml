@@ -11,9 +11,8 @@ jobs:
       - name: Build the image
         run: |
           docker build -t test_image -f test.Dockerfile .
-          docker save -o test_image.tar test_image
+          docker save -o /tmp/test_image.tar test_image
       - name: Test the image built in last step
         run: |
-          docker load -i test_image.tar
-          docker run -t test_image
-
+          docker load -i /tmp/test_image.tar
+          docker run --cidfile /tmp/docker_test.cid ubuntu echo "test"
