@@ -3,6 +3,20 @@ name: Test Docker Image
 on:
   workflow_dispatch:
 
+#jobs:
+#  build-image-test:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Build the image
+#        run: |
+#          docker build -t test_image -f test.Dockerfile .
+#          docker save -o /tmp/test_image.tar test_image
+#      - name: Test the image built in last step
+#        run: |
+#          docker load -i /tmp/test_image.tar
+#          docker run --cidfile /tmp/docker_test.cid  test_image echo "test"
+
 jobs:
   build-image-test:
     runs-on: ubuntu-latest
@@ -11,8 +25,8 @@ jobs:
       - name: Build the image
         run: |
           docker build -t test_image -f test.Dockerfile .
-          docker save -o /tmp/test_image.tar test_image
+          #docker save -o /tmp/test_image.tar test_image
       - name: Test the image built in last step
         run: |
-          docker load -i /tmp/test_image.tar
-          docker run --cidfile /tmp/docker_test.cid ubuntu echo "test"
+          #docker load -i /tmp/test_image.tar
+          docker run --cidfile /tmp/docker_test.cid  test_image echo "test"
