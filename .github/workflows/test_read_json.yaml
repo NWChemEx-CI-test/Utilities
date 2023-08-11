@@ -19,8 +19,8 @@ jobs:
         #filecont: ${{ fromJSON(steps.read_file.outputs.contents) }}
         run: |
           #echo "${{ steps.read_file.outputs.contents }}"
-          echo ${{ fromJSON(steps.read_file.outputs.contents).gcc_version }}
-          echo ${{ fromJSON(steps.read_file.outputs.contents).clang_version }}
+          echo "${{ fromJSON(steps.read_file.outputs.contents).gcc_version }}"
+          echo "${{ fromJSON(steps.read_file.outputs.contents).clang_version }}"
 
         #- name: get properties
         #  id: json_properties
