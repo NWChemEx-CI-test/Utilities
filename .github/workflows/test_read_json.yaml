@@ -1,7 +1,8 @@
 name: "Read file contents"
 
-on: push
-  branches: master
+on: 
+  push:
+    branches: master
 
 jobs:
   file_contents:
