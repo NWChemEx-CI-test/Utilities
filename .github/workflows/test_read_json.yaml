@@ -25,5 +25,6 @@ jobs:
         uses: zoexx/github-action-json-file-properties@release
         with:
           file_path: ".github/workflows/example.json"
+          prop_path: "widget.window"
       - run: |
-          echo ${{steps.json_properties.outputs.widget}}
+          echo ${{steps.json_properties.outputs.title}}
