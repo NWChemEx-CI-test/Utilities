@@ -10,12 +10,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Read file contents
         id: read_file
         uses: andstor/file-reader-action@v1
         with:
           path: ".github/workflows/example.json"
-
       - name: File contents
-        run: echo "${{ steps.read_file.outputs.contents }}"
+        run: |
+          #echo "${{ steps.read_file.outputs.contents }}"
+          filecont=${{ fromJSON(steps.read_file.outputs.contents) }}
+          echo ${{ filecont.widget.debug }}
