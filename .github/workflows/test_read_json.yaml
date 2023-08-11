@@ -16,7 +16,7 @@ jobs:
         with:
           path: ".github/workflows/example.json"
       - name: File contents
+        filecont: ${{ fromJSON(steps.read_file.outputs.contents) }}
         run: |
           #echo "${{ steps.read_file.outputs.contents }}"
-          filecont=${{ fromJSON(steps.read_file.outputs.contents) }}
           echo ${{ filecont.widget.debug }}
