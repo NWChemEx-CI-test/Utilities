@@ -10,17 +10,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        - name: Read file contents
-          id: read_file
-          uses: andstor/file-reader-action@v1
-          with:
-            path: ".github/workflows/example2.json"
-        - name: File contents
-          #filecont: ${{ fromJSON(steps.read_file.outputs.contents) }}
-          run: |
-            #echo "${{ steps.read_file.outputs.contents }}"
-            echo ${{ fromJSON(steps.read_file.outputs.contents).gcc_version }}
-            echo ${{ fromJSON(steps.read_file.outputs.contents).clang_version }}
+      - name: Read file contents
+        id: read_file
+        uses: andstor/file-reader-action@v1
+        with:
+          path: ".github/workflows/example2.json"
+      - name: File contents
+        #filecont: ${{ fromJSON(steps.read_file.outputs.contents) }}
+        run: |
+          #echo "${{ steps.read_file.outputs.contents }}"
+          echo ${{ fromJSON(steps.read_file.outputs.contents).gcc_version }}
+          echo ${{ fromJSON(steps.read_file.outputs.contents).clang_version }}
 
         #- name: get properties
         #  id: json_properties
