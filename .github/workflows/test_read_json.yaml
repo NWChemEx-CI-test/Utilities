@@ -26,4 +26,4 @@ jobs:
         with:
           file_path: ".github/workflows/example.json"
       - run: |
-          echo ${{steps.json_properties.outputs.widget.debug}}
+          echo ${{steps.json_properties.outputs.widget}}
