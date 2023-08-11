@@ -1,0 +1,5 @@
+{
+	"gcc_version" : "9",
+	"clang_version": "11",
+	"ubuntu_version": "20.04"
+}
