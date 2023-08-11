@@ -19,7 +19,7 @@ jobs:
         #filecont: ${{ fromJSON(steps.read_file.outputs.contents) }}
         run: |
           #echo "${{ steps.read_file.outputs.contents }}"
-          gccv="${{ fromJSON(steps.read_file.outputs.contents).gcc_version }}"
+          gccv="${{fromJSON(steps.read_file.outputs.contents).gcc_version}}"
           echo ${gccv}
 
         #- name: get properties
