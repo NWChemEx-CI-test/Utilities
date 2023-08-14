@@ -21,7 +21,7 @@ jobs:
         run: |
           #echo "${{ steps.read_file.outputs.contents }}"
           #gccv="${{fromJSON(steps.read_file.outputs.contents)}}"
-          echo "gcc_version = " ${gcc_version}
+          echo ${gcc_version}
 
         #- name: get properties
         #  id: json_properties
