@@ -8,17 +8,26 @@ jobs:
   file_contents:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Read file contents
-        id: read_file
-        uses: andstor/file-reader-action@v1
+      - name: get properties
+        id: json_properties
+        uses: zoexx/github-action-json-file-properties@release
         with:
-          path: ".github/workflows/example2.json"
-      - name: File contents
-        env: ${{ fromJSON(steps.read_file.outputs.contents) }}
-        run: |
-          echo "gcc_version =" ${{ env.gcc_version }}
+          file_path: ".github/workflows/nwx_versions.cmake"
+          prop_path: "payload.blob"
+      - run: |
+          echo ${{steps.json_properties.outputs.rawLines}}
+
+            #- name: Checkout code
+            #  uses: actions/checkout@v3
+            #- name: Read file contents
+            #  id: read_file
+            #  uses: andstor/file-reader-action@v1
+            #  with:
+            #    path: ".github/workflows/example2.json"
+            #- name: File contents
+            #  env: ${{ fromJSON(steps.read_file.outputs.contents) }}
+            #  run: |
+            #    echo "gcc_version =" ${{ env.gcc_version }}
 
         #- name: get properties
         #  id: json_properties
