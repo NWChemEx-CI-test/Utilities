@@ -12,7 +12,7 @@ jobs:
         id: json_properties
         uses: zoexx/github-action-json-file-properties@release
         with:
-          file_path: ".github/workflows/nwx_versions.cmake"
+          file_path: ".github/workflows/nwx_versions.json"
           prop_path: "payload.blob"
       - run: |
           echo ${{steps.json_properties.outputs.rawLines}}
