@@ -8,6 +8,8 @@ jobs:
   file_contents:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: get properties
         id: json_properties
         uses: zoexx/github-action-json-file-properties@release
