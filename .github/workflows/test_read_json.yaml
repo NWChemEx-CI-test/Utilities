@@ -16,11 +16,8 @@ jobs:
         with:
           path: ".github/workflows/example2.json"
       - name: File contents
-        #filecont: ${{ fromJSON(steps.read_file.outputs.contents) }}
         env: ${{ fromJSON(steps.read_file.outputs.contents) }}
         run: |
-          #echo "${{ steps.read_file.outputs.contents }}"
-          #gccv="${{fromJSON(steps.read_file.outputs.contents)}}"
           echo ${{ env.gcc_version }}
 
         #- name: get properties
