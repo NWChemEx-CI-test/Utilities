@@ -10,12 +10,31 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: get the version source
+        uses: wei/wget@v1
+        with:
+          args: https://github.com/NWChemEx-Project/NWXCMake/blob/master/cmake/nwx_versions.cmake
       - name: get properties
         id: json_properties
         uses: zoexx/github-action-json-file-properties@release
         with:
-          file_path: ".github/workflows/nwx_versions.json"
+          file_path: "nwx_versions.cmake"
           prop_path: "payload.blob"
-      - run: |
-          echo ${{ steps.json_properties.outputs.rawLines }}
+      - name: Write raw lines 
+        with:
+          outfile_path: rawLines.tmp
+        run: |
+          echo ${{ steps.json_properties.outputs.rawLines }} > "${{outfile_path}}"
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Convert raw lines into JSON
+        uses: NWChemEx-CI-test/.github/actions/rawlines2json@master
+        with:
+          infile_path: rawLines.tmp
+          outfile_path: versions.json
+      - name: Check results
+        run: |
+          cat versions.json
 
