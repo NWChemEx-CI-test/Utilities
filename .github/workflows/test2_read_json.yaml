@@ -1,0 +1,21 @@
+name: "Read file contents"
+
+on: 
+  push:
+    branches: master
+
+jobs:
+  file_contents:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: get properties
+        id: json_properties
+        uses: zoexx/github-action-json-file-properties@release
+        with:
+          file_path: ".github/workflows/nwx_versions.json"
+          prop_path: "payload.blob"
+      - run: |
+          echo ${{ steps.json_properties.outputs.rawLines }}
+
