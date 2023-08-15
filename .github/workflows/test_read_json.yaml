@@ -39,8 +39,7 @@ jobs:
         with:
           file_path: package_versions.json
       - name: put json into env
-        env: ${{ fromJSON(steps.new_json_read.outputs) }}
+        env: ${{ fromJSON(steps.new_json_read.outputs.contents) }}
         run: |
-          echo "${{ fromJSON(steps.new_json_read.outputs) }}"
           echo "gcc_version = " ${env.gcc_version}
 
