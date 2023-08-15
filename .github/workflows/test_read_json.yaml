@@ -33,7 +33,12 @@ jobs:
         with:
           infile_path: rawLines.tmp
           outfile_path: package_versions.json
+      - name: Read file contents
+        id: read_file
+        uses: andstor/file-reader-action@v1
+        with:
+          path: package_versions.json
       - name: put json into env
-        env: ${{ fromJSON(`cat package_versions.json`) }}
+        env: ${{ fromJSON(steps.read_file.outputs.content) }}
         run: |
           echo "gcc_version = " ${{env.gcc_version}}
