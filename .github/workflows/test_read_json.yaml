@@ -13,12 +13,12 @@ jobs:
       - name: get the version source
         uses: wei/wget@v1
         with:
-          args: https://github.com/NWChemEx-Project/NWXCMake/blob/master/cmake/nwx_versions.cmake
+          args: -O nwx_versions.json https://github.com/NWChemEx-Project/NWXCMake/blob/master/cmake/nwx_versions.cmake
       - name: get properties
         id: json_properties
         uses: zoexx/github-action-json-file-properties@release
         with:
-          file_path: "nwx_versions.cmake"
+          file_path: "nwx_versions.json"
           prop_path: "payload.blob"
       - name: Write raw lines 
         env:
