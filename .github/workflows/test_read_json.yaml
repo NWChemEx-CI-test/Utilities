@@ -33,7 +33,7 @@ jobs:
         with:
           infile_path: rawLines.tmp
           outfile_path: package_versions.json
-      - name: Read mew json file
+      - name: Read new json file
         id: new_json_read
         uses: zoexx/github-action-json-file-properties@release
         with:
@@ -41,5 +41,6 @@ jobs:
       - name: put json into env
         env: ${{ fromJSON(steps.new_json_read.outputs) }}
         run: |
+          echo "${{ fromJSON(steps.new_json_read.outputs) }}"
           echo "gcc_version = " ${env.gcc_version}
 
