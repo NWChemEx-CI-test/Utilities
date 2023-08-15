@@ -21,10 +21,10 @@ jobs:
           file_path: "nwx_versions.cmake"
           prop_path: "payload.blob"
       - name: Write raw lines 
-        with:
+        env:
           outfile_path: rawLines.tmp
         run: |
-          echo ${{ steps.json_properties.outputs.rawLines }} > "${{outfile_path}}"
+          echo ${{ steps.json_properties.outputs.rawLines }} > "${{env.outfile_path}}"
       - name: Set up python
         uses: actions/setup-python@v4
         with:
