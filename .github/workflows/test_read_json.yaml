@@ -1,7 +1,8 @@
 name: "Read file contents"
 
 on: 
-  workflow_dispatch:
+  push:
+    branches: master
 
 jobs:
   file_contents:
@@ -10,9 +11,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: get the version source
-        uses: wei/wget@v1
-        with:
-          args: -O nwx_versions.json https://github.com/NWChemEx-Project/NWXCMake/blob/master/cmake/nwx_versions.cmake
+        run: |
+          curl -L -o nwx_versions.json https://github.com/NWChemEx-Project/NWXCMake/blob/master/cmake/nwx_versions.cmake
       - name: get properties
         id: json_properties
         uses: zoexx/github-action-json-file-properties@release
