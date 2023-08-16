@@ -28,15 +28,26 @@ jobs:
           #    token: ${{ secrets.DOCKER_PAT }}
           #    tag: tmp
           #
-      - name: Delete test image
-        uses: albertcolom/delete-package-container@main
-        with:
-          token: ${{ secrets.DOCKER_PAT }}
-          image: nwchemex-ci-test/test-image-delete:tmp
+          #- name: Delete test image
+          #  uses: albertcolom/delete-package-container@main
+          #  with:
+          #    token: ${{ secrets.DOCKER_PAT }}
+          #    image: nwchemex-ci-test/test-image-delete:tmp
           #
-          #- name: Delete image by docker rmi # this does not work!!!
-          #  run: |
-          #    docker rmi ghcr.io/nwchemex-ci-test/test-image-delete:tmp
+  
+  delete-image:
+    runs-on: ubuntu-latest
+    needs: build-image
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_PAT }}
+      - name: Delete image by docker rmi # this does not work!!!
+        run: |
+          docker rmi ghcr.io/nwchemex-ci-test/test-image-delete:tmp
       - name: Check  image
         id: image_exists
         uses: cloudposse/github-action-docker-image-exists@main
