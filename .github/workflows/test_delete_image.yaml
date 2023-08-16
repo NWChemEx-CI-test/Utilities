@@ -18,8 +18,8 @@ jobs:
           cat <<EOF>> test.Dockerfile
           FROM ubuntu:20.04
           EOF
-        docker build -t ghcr.io/nwchemex-ci-test/test-image-delete:tmp -f test.Dockerfile .
-        docker push ghcr.io/nwchemex-ci-test/test-image-delete:tmp
+          docker build -t ghcr.io/nwchemex-ci-test/test-image-delete:tmp -f test.Dockerfile .
+          docker push ghcr.io/nwchemex-ci-test/test-image-delete:tmp
       - name: Delete image
         uses: bots-house/ghcr-delete-image-action@v1.1.0
         with:
