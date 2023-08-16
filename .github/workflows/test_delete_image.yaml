@@ -1,0 +1,49 @@
+name: Test of deleting image in registry
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_PAT }}
+      - name: build and push a test image
+        run: |
+          cat <<EOF>> test.Dockerfile
+          FROM ubuntu:20.04
+          EOF
+        docker build -t ghcr.io/nwchemex-ci-test/test-image-delete:tmp -f test.Dockerfile .
+        docker push ghcr.io/nwchemex-ci-test/test-image-delete:tmp
+      - name: Delete image
+        uses: bots-house/ghcr-delete-image-action@v1.1.0
+        with:
+          owner: nwchemex-ci-test
+          name: test-image-delete
+          token: ${{ secrets.DOCKER_PAT }}
+          tag: tmp
+      - name: Check  image
+        id: image_exists
+        uses: cloudposse/github-action-docker-image-exists@main
+        with:
+          image_name: nwchemex-ci-test/test-image-delete
+          registry: ghcr.io
+          organization: "${{ github.event.repository.owner.login }}"
+          repository: "${{ github.event.repository.name }}"
+          login: ${{ github.actor }}
+          password: "${{ secrets.DOCKER_PAT }}"
+          tag: tmp
+      - name: image exists
+        if: ${{ steps.image_exists.conclusion == 'success' }}
+        run: |
+          echo "Image not deleted!"
+      - name: image not exist
+        if: ${{ steps.image_exists.conclusion != 'success' }}
+        run: |
+          echo "Image deleted successfully!"
+
