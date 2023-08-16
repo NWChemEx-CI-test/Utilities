@@ -27,14 +27,13 @@ jobs:
           #    name: test-image-delete
           #    token: ${{ secrets.DOCKER_PAT }}
           #    tag: tmp
-      - name: Delete image
-        uses: paulushcgcj/delete-github-package@master
+          #
+      - name: Delete test image
+        uses: albertcolom/delete-package-container@main
         with:
           token: ${{ secrets.DOCKER_PAT }}
-          type: maven
-          name: test-image-delete
-          version: 1.0.0
-          user: nwchemex-ci-test
+          image: ghcr.io/nwchemex-ci-test/test-image-delete:tmp
+          #
           #- name: Delete image by docker rmi # this does not work!!!
           #  run: |
           #    docker rmi ghcr.io/nwchemex-ci-test/test-image-delete:tmp
