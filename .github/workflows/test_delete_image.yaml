@@ -40,11 +40,19 @@ jobs:
     needs: build-image
     steps:
       - name: Delete image
-        uses: chipkent/action-cleanup-package@v1.0.1
+        uses: paulushcgcj/delete-github-package@v1.0.0
         with:
-          package-name: nwchemex-ci-test/test-image-delete
-          tag: tmp
-          github-token: ${{ secrets.DOCKER_PAT }}
+          token: ${{ secrets.DOCKER_PAT }}
+          type: container
+          name: test-image-delete
+          version: 1.0.0
+          user: nwchemex-ci-test
+          #- name: Delete image
+          #  uses: chipkent/action-cleanup-package@v1.0.1
+          #  with:
+          #    package-name: nwchemex-ci-test/test-image-delete
+          #    tag: tmp
+          #    github-token: ${{ secrets.DOCKER_PAT }}
       - name: Check  image
         id: image_exists
         uses: cloudposse/github-action-docker-image-exists@main
