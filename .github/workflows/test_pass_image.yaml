@@ -30,13 +30,17 @@ jobs:
           name: testimage
           path: /tmp
       - name: Load saved image
-        run: docker load < /tmp/testimage.tar
-
-  test-run-in-container:
-    runs-on: ubuntu-latest
-    needs: load-image
-    container:
-      image: test-image:tmp
-    steps:
-      - name: test run
-        run: echo "Test run successfully!"
+        run: | 
+          docker load < /tmp/testimage.tar
+          docker run --rm test-image:tmp lsb_release -a | grep -i description
+      - name: In the container or not
+        run: |
+          lsb_release -a | grep -i description
+        #test-run-in-container:
+        #  runs-on: ubuntu-latest
+        #  needs: load-image
+        #  container:
+        #    image: test-image:tmp
+        #  steps:
+        #    - name: test run
+        #      run: echo "Test run successfully!"
