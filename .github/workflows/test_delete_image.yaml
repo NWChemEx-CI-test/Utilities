@@ -40,13 +40,21 @@ jobs:
     needs: build-image
     steps:
       - name: Delete image
-        uses: paulushcgcj/delete-github-package@main
+        uses: actions/delete-package-versions@v4
         with:
+          owner: nwchemex-ci-test
+          package-name: 'test-image-delete'
+          package-type: 'container'
+          min-versions-to-keep: 0
           token: ${{ secrets.DOCKER_PAT }}
-          type: container
-          name: test-image-delete
-          version: 1.0.0
-          user: nwchemex-ci-test
+          #- name: Delete image
+          #  uses: paulushcgcj/delete-github-package@main
+          #  with:
+          #    token: ${{ secrets.DOCKER_PAT }}
+          #    type: container
+          #    name: test-image-delete
+          #    version: 1.0.0
+          #    user: nwchemex-ci-test
           #- name: Delete image
           #  uses: chipkent/action-cleanup-package@v1.0.1
           #  with:
