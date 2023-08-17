@@ -1,0 +1,42 @@
+name: Test of passing images between jobs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build and push a test image
+        run: |
+          cat <<EOF>> test.Dockerfile
+          FROM ubuntu:20.04
+          EOF
+          docker build -t test-image:tmp -f test.Dockerfile .
+          docker save -o /tmp/testimage.tar test-image:tmp
+      - name: Upload image as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: testimage
+          path: /tmp/testimage.tar
+
+  load-image:
+    runs-on: ubuntu-latest
+    needs: build-image
+    steps:
+      - name: Download image from artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: testimage
+          path: /tmp
+      - name: Load saved image
+        run: docker load < /tmp/testimage.tar
+
+  test-run-in-container:
+    runs-on: ubuntu-latest
+    needs: load-image
+    container:
+      image: test-image:tmp
+    steps:
+      - name: test run
+        run: echo "Test run successfully!"
