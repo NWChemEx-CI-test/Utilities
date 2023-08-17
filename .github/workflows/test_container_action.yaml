@@ -1,0 +1,13 @@
+name: test container action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  action-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: In the original container
+        run: /etc/issue
+      - name: call container action
+        uses: NWChemEx-CI-test/Utilities/actions/image-action@master

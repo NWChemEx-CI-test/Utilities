@@ -1,0 +1,17 @@
+name: test image action
+
+description: To test running an action in a container
+
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+outputs:
+  ubuntu_version: # id of output
+    description: the ubuntu version of the image used
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.who-to-greet }}
