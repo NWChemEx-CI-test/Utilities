@@ -8,6 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: In the original container
-        run: /etc/issue
+        run: cat /etc/issue
       - name: call container action
         uses: NWChemEx-CI-test/Utilities/actions/image-action@master
