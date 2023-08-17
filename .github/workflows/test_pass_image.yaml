@@ -35,10 +35,11 @@ jobs:
       - name: Load saved image
         run: | 
           docker load < /tmp/testimage.tar
-          docker run --rm test-image:tmp cat /etc/issue
-      - name: In the container or not
-        run: |
-          cat /etc/issue
+        docker run --rm test-image:tmp echo "In the container:"
+        cat /etc/issue
+        #- name: In the container or not
+        #  run: |
+        #    cat /etc/issue
         #test-run-in-container:
         #  runs-on: ubuntu-latest
         #  needs: load-image
