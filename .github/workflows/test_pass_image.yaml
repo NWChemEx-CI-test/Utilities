@@ -35,7 +35,7 @@ jobs:
       - name: Load saved image
         run: | 
           docker load < /tmp/testimage.tar
-          docker run --rm test-image:tmp lsb_release -a | grep -i description
+          docker run --rm test-image:tmp cat /etc/issue
       - name: In the container or not
         run: |
           cat /etc/issue
