@@ -1,6 +1,6 @@
-#!/bin/sh -l
+#!/bin/bash -l
 
-echo "Hello $1"
-cat /etc/issue
-time=$(date)
-echo "time=$" >> $GITHUB_OUTPUT
+BASE_TAG=$1
+
+cd /docker-action
+docker build -t docker-action --build-arg btag="$BASE_TAG" . && docker run docker-action

@@ -1,17 +1,17 @@
-name: test image action
+name: test container action with arguments
 
-description: To test running an action in a container
+description: To test running an action in a container with building arguments
 
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  btag:  
+    description: 'tag of the base image'
     required: true
-    default: 'World'
+    default: 'stable'
 outputs:
-  ubuntu_version: # id of output
-    description: the ubuntu version of the image used
+  gcc_version: # id of output
+    description: the gcc version in the image used
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
+    - ${{ inputs.btag }}

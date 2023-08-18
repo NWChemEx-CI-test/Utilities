@@ -11,3 +11,5 @@ jobs:
         run: cat /etc/issue
       - name: call container action
         uses: NWChemEx-CI-test/Utilities/actions/image-action@master
+        with:
+          btag: latest
