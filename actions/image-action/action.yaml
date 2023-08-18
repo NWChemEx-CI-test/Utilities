@@ -7,6 +7,10 @@ inputs:
     description: 'tag of the base image'
     required: true
     default: 'stable'
+  token:
+    required: true
+  user:
+    required: true
 outputs:
   gcc_version: # id of output
     description: the gcc version in the image used
@@ -14,4 +18,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.btag }}
+    - ${{ inputs.token }}
+      ${{ inputs.user }}
+      ${{ inputs.btag }}
+
