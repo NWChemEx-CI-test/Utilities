@@ -2,8 +2,8 @@ ARG btag
 
 FROM ghcr.io/nwchemex-ci-test/base_parallelzone:$btag
 
-COPY entrypoint.sh /entrypoint.sh
+COPY build.sh /build.sh
 
-RUN ["chmod", "+x", "/entrypoint.sh"]
+RUN ["chmod", "+x", "/build.sh"]
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/build.sh"]

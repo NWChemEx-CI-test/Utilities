@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh -l
 
 BASE_TAG=$1
 

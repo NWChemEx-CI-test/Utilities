@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/sh -l
 
 gcc_version="$(gcc --version | grep -i gcc)"
 gcc_version="${gcc_version##* }"
