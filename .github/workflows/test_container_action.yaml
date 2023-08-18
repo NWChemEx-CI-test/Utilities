@@ -11,7 +11,11 @@ jobs:
         run: cat /etc/issue
       - name: call container action
         uses: NWChemEx-CI-test/Utilities/actions/image-action@master
+        id: container-action
         with:
           btag: latest
           token: ${{ secrets.DOCKER_PAT }}
           user: ${{ github.actor }}
+      - name: check gcc version
+        run: |
+          echo "The gcc version in the base image is " ${{steps.container-action.outputs.gcc_version}}

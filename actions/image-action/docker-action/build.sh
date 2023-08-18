@@ -5,4 +5,4 @@ gcc_version="${gcc_version##* }"
 
 echo "In the base image container"
 cat /etc/issue
-echo "::set-output name=gcc_version::${gcc_version}"
+echo "gcc_version=${gcc_version}" >> $GITHUB_OUTPUT
