@@ -11,6 +11,10 @@ inputs:
     required: true
   user:
     required: true
+  env1_sh:
+    required: true
+  env2_sh:
+    required: true
 outputs:
   gcc_version: # id of output
     description: the gcc version in the image used
@@ -21,4 +25,5 @@ runs:
     - ${{ inputs.token }}
     - ${{ inputs.user }}
     - ${{ inputs.btag }}
-
+    - ${{ inputs.env1_sh }}
+    - ${{ inputs.env2_sh }}

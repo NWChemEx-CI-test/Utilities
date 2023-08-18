@@ -16,6 +16,8 @@ jobs:
           btag: latest
           token: ${{ secrets.DOCKER_PAT }}
           user: ${{ github.actor }}
+          env1_sh: Test
+          env2_sh: false
       - name: check gcc version
         run: |
           echo "The gcc version in the base image is " ${{steps.container-action.outputs.gcc_version}}
