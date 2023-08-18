@@ -10,4 +10,4 @@ ARG env1
 ARG env2
 
 ENTRYPOINT ["/build.sh"]
-CMD [${env1},${env2}]
+CMD ["${env1}","${env2}"]
