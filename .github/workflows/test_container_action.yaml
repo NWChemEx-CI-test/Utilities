@@ -9,6 +9,12 @@ jobs:
     steps:
       - name: In the original container
         run: cat /etc/issue
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_PAT }}
       - name: call container action
         uses: NWChemEx-CI-test/Utilities/actions/image-action@master
         with:

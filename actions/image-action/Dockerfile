@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM alpine:latest
 
 COPY docker-action /docker-action
 COPY entrypoint.sh /entrypoint.sh
