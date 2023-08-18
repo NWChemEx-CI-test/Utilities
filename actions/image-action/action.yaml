@@ -5,7 +5,7 @@ description: To test running an action in a container with building arguments
 inputs:
   btag:  
     description: 'tag of the base image'
-    required: true
+    required: false
     default: 'stable'
   token:
     required: true
@@ -19,6 +19,6 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.token }}
-      ${{ inputs.user }}
-      ${{ inputs.btag }}
+    - ${{ inputs.user }}
+    - ${{ inputs.btag }}
 
