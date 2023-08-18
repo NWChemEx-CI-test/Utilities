@@ -5,6 +5,6 @@ gcc_version="${gcc_version##* }"
 
 echo "In the base image container"
 cat /etc/issue
-echo "env1 = " $3
-echo "env2 = " $4
+echo "env1 = " $1
+echo "env2 = " $2
 echo "::set-output name=gcc_version::${gcc_version}"
