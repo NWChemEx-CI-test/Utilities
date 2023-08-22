@@ -23,7 +23,7 @@ jobs:
         if: ${{ steps.image_exists.outputs.conclusion != 0 }}
         uses: NWChemEx-CI-test/.github/actions/push_image@master
         with:
-          tmp_image_name: ghcr.io/nwchemex-ci-test/base_parallelzone
+          tmp_image_name: base_parallelzone
           tmp_image_tag: latest
           image_name: ghcr.io/nwchemex-ci-test/base_parallelzone
           image_tag: stable
