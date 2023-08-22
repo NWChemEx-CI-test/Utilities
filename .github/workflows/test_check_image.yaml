@@ -20,7 +20,7 @@ jobs:
           docker manifest inspect ghcr.io/nwchemex-ci-test/base_chemist:stable > /dev/null
           echo "conclusion=$?" >> "$GITHUB_OUTPUT"
       - name: Push stable release image if not exist
-        if: ${{ steps.image_exists.outputs.conclusion != '0' }}
+        if: ${{ steps.image_exists.outputs.conclusion != 0 }}
         uses: NWChemEx-CI-test/.github/actions/push_image@master
         with:
           tmp_image_name: ghcr.io/nwchemex-ci-test/base_parallelzone
