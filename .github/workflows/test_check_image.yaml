@@ -21,9 +21,7 @@ jobs:
           echo "conclusion=$?" >> "$GITHUB_OUTPUT"
       - name: Push stable release image if not exist
         if: ${{ steps.image_exists.outputs.conclusion != 0 }}
-        uses: NWChemEx-CI-test/.github/actions/push_image@master
-        with:
-          tmp_image_name: base_parallelzone
-          tmp_image_tag: latest
-          image_name: ghcr.io/nwchemex-ci-test/base_parallelzone
-          image_tag: stable
+        run: |
+          docker pull ghcr.io/nwchemex-ci-test/base_parallelzone:latest
+          docker tag ghcr.io/nwchemex-ci-test/base_parallelzone:latest ghcr.io/nwchemex-ci-test/base_parallelzone:stable
+          docker push ghcr.io/nwchemex-ci-test/base_parallelzone:stable
